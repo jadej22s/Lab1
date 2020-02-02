@@ -52,29 +52,31 @@ twins <- twins %>% mutate(
 Use the `head` function to look at the first 6 rows of the data set (which is called `twins`) .
 
 ```{r}
+head(twins)
 ```
 
 Use the `dim` function to find the number of rows (observational units) and columns (variables) in the data set:
 
 ```{r}
+dim(twins)
 ```
 
 Calculate the mean, median, and standard deviation of differences in volume of the left hippocampus.  I have provided an outline of the code to use.  You need to provide the name of the data frame at the beginning of the first line, and the name of the variable from that data frame to summarize for the mean, median, and sd functions.
 
 ```{r}
- %>%
+ twins%>%
   summarize(
-    mean_difference = mean(),
-    median_difference = median(),
-    sd_difference = sd()
+    mean_difference = mean(difference),
+    median_difference = median(difference),
+    sd_difference = sd(difference)
   )
 ```
 
 Create a histogram of differences in volume of the left hippocampus (unaffected - affected).  I have provided an outline of the code to use.  You need to specify the name of the data frame, the variable from that data frame to use for the x axis of the plot, and a number of bins to use for the histogram.
 
 ```{r}
-ggplot(data = , mapping = aes(x = )) +
-  geom_histogram(bins = )
+ggplot(data = twins, mapping = aes(x = difference)) +
+  geom_histogram(bins = 20 )
 ```
 
 ## Part 4: t test and confidence interval
@@ -82,4 +84,17 @@ ggplot(data = , mapping = aes(x = )) +
 Set up and run the necessary R code below to conduct a t test and find a confidence interval for the average difference.
 
 ```{r}
+t.test(x= twins$Unaffected, y= twins$Affected, mu=0, paired= TRUE)
 ```
+
+```{r}
+t.test(~ difference, mu=0 , data = twins)
+
+qt(0.025, df = 14, lower.tail=FALSE)
+
+
+
+```
+
+
+
